@@ -8,7 +8,7 @@ This repository contains machine learning pipelines for Census dataset analysis,
 
 ```
 ├── classification_xgboost.py      # Train + save XGBoost model
-├── evaluate.py                    # Load saved model, run evaluation on a CSV (CLI)
+├── evaluate_classification.py     # Load saved model, run evaluation on a CSV (CLI)
 ├── kmeans_cluster.py              # K-Means clustering pipeline
 ├── environment.yml                # Conda environment specification
 ├── classification/                # Preprocessing & helper functions
@@ -38,7 +38,7 @@ conda activate TakeHome
 cd TakeHome
 python -m venv venv
 source venv/bin/activate    # Windows: venv\Scripts\activate
-pip install -r requirements.txt  # or: pip install numpy pandas scikit-learn xgboost matplotlib seaborn
+pip install numpy pandas scikit-learn xgboost matplotlib seaborn
 ```
 
 ---
@@ -65,13 +65,13 @@ Runs training with early stopping and saves the model.
 python classification_xgboost.py --csv path/to/census_bureau.csv
 ```
 
-### Evaluate (CLI)
+### Evaluate
 
 Load a saved model and evaluate a CSV. Threshold is configurable depending on if you want precision first or recall first strategy. (default = 0.8).
 
 ```bash
 python evaluate_classification.py --csv path/to/new_data.csv
-python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.95
+python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.9
 ```
 
 ---
@@ -81,7 +81,7 @@ python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.95
 Run K-Means to generate cluster assignments and visualizations:
 
 ```bash
-python kmeans_cluster.py 
+python kmeans_cluster.py --csv path/to/census_bureau.csv
 ```
 
 ---
