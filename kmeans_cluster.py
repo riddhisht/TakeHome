@@ -3,8 +3,14 @@ import pandas as pd
 from segmentation.preprocess import apply_mappings, build_preprocessor
 from segmentation.analysis import compute_profiles_from_processed, plot_pca, plot_cluster_profiles
 from segmentation.model import run_clustering
+import argparse
 
-DATA_PATH = "census_bureau.csv"
+#Parse
+parser = argparse.ArgumentParser()
+parser.add_argument("--csv", required=True)
+args = parser.parse_args()
+
+DATA_PATH = args.csv
 OUT_DIR = "cluster_output"
 
 N_CLUSTERS = 8
