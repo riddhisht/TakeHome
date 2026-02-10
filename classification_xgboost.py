@@ -5,9 +5,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from classification.preprocess import preprocess
 import joblib
-  
+import argparse
+
+#Parse
+parser = argparse.ArgumentParser()
+parser.add_argument("--csv", required=True)
+args = parser.parse_args()
+
 # Load data
-df = pd.read_csv("census_bureau.csv")
+df = pd.read_csv(args.csv)
 
 # Preprocess data
 X_train_enc, y_train, X_val_enc, y_val, X_test_enc, y_test = preprocess(df)
