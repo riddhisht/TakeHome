@@ -45,9 +45,11 @@ source venv/bin/activate    # Windows: venv\Scripts\activate
 pip install numpy pandas scikit-learn xgboost matplotlib seaborn
 ```
 ---
-## Classification (XGBoost)
+## Data
 
-```bash census-bureau.data ``` and ```census-bureau.columns``` need to be added to the repository or path needs to be provided
+```bash
+ census-bureau.data and census-bureau.columns need to be added to the repository, or path to these files need to be provided.
+```
 ---
 
 ## Classification (XGBoost)
