@@ -40,19 +40,6 @@ python -m venv venv
 source venv/bin/activate    # Windows: venv\Scripts\activate
 pip install numpy pandas scikit-learn xgboost matplotlib seaborn
 ```
-
----
-
-## Data
-
-Provide a CSV with Census-style features and an income label. Example filename used in the repo:
-
-```
-census_bureau.csv
-```
-
-Preprocessing is centralized in `classification/preprocess.py` and reused by training and evaluation.
-
 ---
 
 ## Classification (XGBoost)
