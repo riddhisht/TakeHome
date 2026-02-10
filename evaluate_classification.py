@@ -8,6 +8,7 @@ from classification.preprocess import preprocess
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--csv", required=True)
+parser.add_argument("--threshold", type=float, default=0.8)
 args = parser.parse_args()
 
 # Load data
@@ -30,7 +31,7 @@ bst.load_model("xgb_model.json")
 test_probs = bst.predict(dtest)
 
 # Tunable threshold
-best_thresh = 0.95
+best_thresh = args.threshold
 
 # Evaluate on test set using that threshold
 test_preds = (test_probs > best_thresh).astype(int)
@@ -44,11 +45,17 @@ rec0 = recall_score(y_test_arr, test_preds, pos_label=0)
 rec1 = recall_score(y_test_arr, test_preds, pos_label=1)
 
 #print the results
-print(f"Test Log Loss: {logloss_test}")
-print(f"Test AUC: {auc_test}")
-print(f"Test Accuracy (thresh = {best_thresh}): {acc_test}")
-print(f"Precision class 0: {prec0}, class 1: {prec1}")
-print(f"Recall class 0: {rec0}, class 1: {rec1}")
+print("XGBoost Evaluation Results")
+print("=" * 20)
+print(f"Threshold           : {best_thresh}")
+print(f"Log Loss            : {logloss_test:.4f}")
+print(f"AUC                 : {auc_test:.4f}")
+print(f"Accuracy            : {acc_test:.4f}")
+print("-" * 20)
+print(f"Precision (class 0) : {prec0:.4f}")
+print(f"Precision (class 1) : {prec1:.4f}")
+print(f"Recall    (class 0) : {rec0:.4f}")
+print(f"Recall    (class 1) : {rec1:.4f}")
 
 # Plot ROC Curve
 fpr, tpr, _ = roc_curve(y_test_arr, test_probs)
