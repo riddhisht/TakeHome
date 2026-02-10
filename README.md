@@ -24,6 +24,10 @@ This repository contains machine learning pipelines for Census dataset analysis,
 
 ## Quick start
 
+```bash
+git clone https://github.com/riddhisht/TakeHome.git
+```
+
 ### Option A — Conda
 
 ```bash
