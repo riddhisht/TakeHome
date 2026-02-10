@@ -7,12 +7,17 @@ import matplotlib.pyplot as plt
 from classification.preprocess import preprocess
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--csv", required=True)
+parser.add_argument("--data", required=True, help="Path to .data file")
+parser.add_argument("--columns", required=True, help="Path to .columns file")
 parser.add_argument("--threshold", type=float, default=0.8)
 args = parser.parse_args()
 
-# Load data
-df = pd.read_csv(args.csv)
+# Read column names from .columns file
+with open(args.columns, 'r') as f:
+    column_names = [line.strip() for line in f if line.strip()]
+
+# Read data from .data file
+df = pd.read_csv(args.data, names=column_names, header=None)
 
 # Preprocess data
 X_train_enc, y_train, X_val_enc, y_val, X_test_enc, y_test = preprocess(df)
@@ -35,7 +40,6 @@ best_thresh = args.threshold
 
 # Evaluate on test set using that threshold
 test_preds = (test_probs > best_thresh).astype(int)
-
 logloss_test = log_loss(y_test_arr, test_probs)
 auc_test = roc_auc_score(y_test_arr, test_probs)
 acc_test = accuracy_score(y_test_arr, test_preds)
@@ -44,7 +48,7 @@ prec1 = precision_score(y_test_arr, test_preds, pos_label=1)
 rec0 = recall_score(y_test_arr, test_preds, pos_label=0)
 rec1 = recall_score(y_test_arr, test_preds, pos_label=1)
 
-#print the results
+# print the results
 print("XGBoost Evaluation Results")
 print("=" * 20)
 print(f"Threshold           : {best_thresh}")
@@ -74,8 +78,10 @@ plt.show()
 
 # Plot Predicted Probability Distribution
 plt.figure(figsize=(10, 6))
-plt.hist(test_probs[y_test_arr == 0], bins=50, alpha=0.7, label='Class 0 (<$50K)', color='gray', density=True)
-plt.hist(test_probs[y_test_arr == 1], bins=50, alpha=0.7, label='Class 1 (>=$50K)', color='red', density=True)
+plt.hist(test_probs[y_test_arr == 0], bins=50, alpha=0.7, label='Class 0 (<$50K)', 
+         color='gray', density=True)
+plt.hist(test_probs[y_test_arr == 1], bins=50, alpha=0.7, label='Class 1 (>=$50K)', 
+         color='red', density=True)
 plt.xlabel('Predicted Probability of Class 1')
 plt.ylabel('Percent of Samples (%)')
 plt.title('XGBoost Predicted Probability Distribution')
