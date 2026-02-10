@@ -2,70 +2,86 @@
 
 This repository contains machine learning pipelines for Census dataset analysis, including XGBoost classification for income prediction and K-Means clustering for population segmentation.
 
-## Project Structure
+---
+
+## Project structure
 
 ```
-├── classification_xgboost.py    # XGBoost classification pipeline
-├── kmeans_cluster.py            # K-Means clustering pipeline
-├── environment.yml              # Conda environment specification
-├── segmentation/                # Directory with segmentation helper functions
-├── classification/              # Directory with classification helper functions
-├── data_plots/                  # Generated plots and visualizations
-├── cluster_output/              # Output of the Clusters generated via K-means
-├── feature_importance.py        # File with Random Forest that calculates importance of each feature
-├── plot_features.py             # File that plots the distribution of each feature
+├── classification_xgboost.py      # Train + save XGBoost model
+├── evaluate.py                    # Load saved model, run evaluation on a CSV (CLI)
+├── kmeans_cluster.py              # K-Means clustering pipeline
+├── environment.yml                # Conda environment specification
+├── classification/                # Preprocessing & helper functions
+├── segmentation/                  # Clustering helper functions
+├── data_plots/                    # Generated plots and visualizations
+├── cluster_output/                # K-Means output files
+├── feature_importance.py          # Random Forest feature importance
+├── plot_features.py               # Feature distribution plots
 └── README.md
 ```
-## Installation
 
-Option 1
+---
 
-1. Enter the repository:
+## Quick start
+
+### Option A — Conda
+
 ```bash
 cd TakeHome
-```
-
-2. Create the conda environment from the provided YAML file:
-```bash
 conda env create -f environment.yml
-```
-
-3. Activate the environment:
-```bash
 conda activate TakeHome
 ```
 
-Option 2
+### Option B — venv + pip
 
-1. Enter the repository:
 ```bash
 cd TakeHome
-```
-
-2. Create a virtual environment:
-```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate    # Windows: venv\Scripts\activate
+pip install -r requirements.txt  # or: pip install numpy pandas scikit-learn xgboost matplotlib seaborn
 ```
 
-3. Install dependencies:
+---
+
+## Data
+
+Provide a CSV with Census-style features and an income label. Example filename used in the repo:
+
+```
+census_bureau.csv
+```
+
+Preprocessing is centralized in `classification/preprocess.py` and reused by training and evaluation.
+
+---
+
+## Classification (XGBoost)
+
+### Train
+
+Runs training with early stopping and saves the model.
+
 ```bash
-pip install numpy pandas scikit-learn xgboost matplotlib seaborn
+python classification_xgboost.py --csv path/to/census_bureau.csv
 ```
-## Usage
 
-### Classification
+### Evaluate (CLI)
 
-Run the XGBoost classification pipeline for income prediction:
+Load a saved model and evaluate a CSV. Threshold is configurable depending on if you want precision first or recall first strategy. (default = 0.8).
 
 ```bash
-python classification_xgboost.py
+python evaluate_classification.py --csv path/to/new_data.csv
+python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.95
 ```
 
-### Clustering
+---
 
-Run the K-Means clustering pipeline for population segmentation:
+## Clustering (K-Means)
+
+Run K-Means to generate cluster assignments and visualizations:
 
 ```bash
-python kmeans_cluster.py
+python kmeans_cluster.py 
 ```
+
+---
