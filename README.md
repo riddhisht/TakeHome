@@ -22,7 +22,7 @@ Option 1
 
 1. Enter the repository:
 ```bash
-cd JPMC_Assign
+cd TakeHome
 ```
 
 2. Create the conda environment from the provided YAML file:
@@ -32,14 +32,14 @@ conda env create -f environment.yml
 
 3. Activate the environment:
 ```bash
-conda activate JPMC_Assign
+conda activate TakeHome
 ```
 
 Option 2
 
 1. Enter the repository:
 ```bash
-cd JPMC_Assign
+cd TakeHome
 ```
 
 2. Create a virtual environment:
