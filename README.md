@@ -49,16 +49,16 @@ pip install numpy pandas scikit-learn xgboost matplotlib seaborn
 Runs training with early stopping and saves the model.
 
 ```bash
-python classification_xgboost.py --csv path/to/census_bureau.csv
+python classification_xgboost.py --data census-bureau.data --columns census-bureau.columns   
 ```
 
 ### Evaluate
 
-Load a saved model and evaluate a CSV. Threshold is configurable depending on if you want precision first or recall first strategy. (default = 0.8).
+Load a saved model and evaluate data. Threshold is configurable depending on if you want precision first or recall first strategy. (default = 0.8).
 
 ```bash
-python evaluate_classification.py --csv path/to/new_data.csv
-python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.9
+python evaluate_classification.py --data census-bureau.data  --columns census-bureau.columns
+python evaluate_classification.py --data census-bureau.data  --columns census-bureau.columns --threshold 0.9
 ```
 
 ---
@@ -68,7 +68,7 @@ python evaluate_classification.py --csv path/to/new_data.csv --threshold 0.9
 Run K-Means to generate cluster assignments and visualizations:
 
 ```bash
-python kmeans_cluster.py --csv path/to/census_bureau.csv
+python kmeans_cluster.py --data census-bureau.data --columns census-bureau.columns
 ```
 
 ---
